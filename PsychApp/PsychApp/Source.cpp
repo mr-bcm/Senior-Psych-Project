@@ -44,7 +44,8 @@ int main(){
 		// this was made by Pete Tucker
 		vector<string> row = split(line);
 		alldata.push_back(atof(row[1].c_str()));	// Debug: this is where we crash. Specifically the issue is with "atof(row[1].c_str())"
-
+		// atof is used to convert string to double.
+		
 		// cout << line <<endl; // was used to output the .csv file contents.
 	}
 
