@@ -3,22 +3,27 @@
 
 // Emma Gebben
 // July 15, 2014
-// Edited by Brennan Metzelaar & Tim Bradford
+// Edited by Brennan Metzelaar
 
 #include <iostream>
 #include <string>
 #include <fstream>
+#include <sstream>		// used for istringstream, which is used to convert strings into numbers.
+#include <algorithm>	// used for the semicolon removal so that the string can be stored as an float without issues
 #include <vector>
+
 
 using namespace std;
 
 int main() {
 
-	string line;
+	string line;	// We will originally take data in as a string
+	float nline;	// The string is now converted to a number, which will be stored here
+	char rmChar = ':';	// Used to remove the semicolon ":" character
 
-	// two vectors, each is incontrol of storing a column of data from the .csv file
-	vector<string> adata;	// changed float to string, for now
-	vector<string> bdata;
+	// Two vectors, each is incontrol of storing a column of data from the .csv file
+	vector<float> adata;	// Changed float to string, for now
+	vector<float> bdata;
 
 
 	ifstream data; // ifstream (input file stream) because we are reading from a file
@@ -34,7 +39,7 @@ int main() {
 		cout << "CSV file opened!\n";		// The message, its happy! :)
 	}
 
-	// copy the file 2301data.csv into the 'line' string.
+	// Copy the file 2301data.csv into the 'line' string.
 	// What we are doing here is very, simple. We get each line from each column, but only store the lines from the columns
 	// that we want to keep. In this case we only care about column 2 and 8.
 	while (getline(data, line)) {
@@ -43,44 +48,38 @@ int main() {
 		getline(data, line, ',');	// 1st column, get/throwaway
 
 		getline(data, line, ',');	// 2nd column, want
-		adata.push_back(line);	// Store 2nd column in vector adata
+		line.erase(std::remove(line.begin(), line.end(), rmChar), line.end());	// The string "line" is combed for every semicolon ":" when it finds one it removes it
+		istringstream(line) >> nline;	// Convert the string to a number
+		adata.push_back(nline);			// Store 2nd column in vector adata
 
-		getline(data, line, ',');	// 3rd column, get/throwaway
-		getline(data, line, ',');	// 4th column, get/throwaway
-		getline(data, line, ',');	// 5th column, get/throwaway
-		getline(data, line, ',');	// 6th column, get/throwaway
-		getline(data, line, ',');	// 7th column, get/throwaway
+		getline(data, line, ',');		// 3rd column, get/throwaway
+		getline(data, line, ',');		// 4th column, get/throwaway
+		getline(data, line, ',');		// 5th column, get/throwaway
+		getline(data, line, ',');		// 6th column, get/throwaway
+		getline(data, line, ',');		// 7th column, get/throwaway
 		
-		getline(data, line, ',');	// 8th column, want
-		bdata.push_back(line);	// Store 8th column in vector bdata
+		getline(data, line, ',');		// 8th column, want
+		istringstream(line) >> nline;	// Convert the string to a number
+		bdata.push_back(nline);			// Store 8th column in vector bdata
 
-		getline(data, line, ',');	// 9th column, get/throwaway
-		getline(data, line, ',');	// 10th column, get/throwaway
+		getline(data, line, ',');		// 9th column, get/throwaway
+		getline(data, line, ',');		// 10th column, get/throwaway
 	}
 
-	data.close();	// close the .csv file. We always want to do this when we are done writing or reading from the file in our program.
+	data.close();	// Close the .csv file. We always want to do this when we are done writing or reading from the file in our program.
 
 
-	// lets print our vector of column data and see if it worked
-	// cout << line << endl;
-	for (int a = 0; a < adata.size(); a++){
-		cout << adata[a] << endl;
-	}
-
-	cout << endl;
+	// Lets print our vector of column data and see if it worked
+	// Sample data for Elapsed Time
 	cout << "Vector adata\n";
 	cout << "Testing data from spot 0 to spot 3\n";
-	cout << adata[0] << endl;
-	cout << adata[1] << endl;
-	cout << adata[2] << endl;
+	cout << adata[0] << endl;			// NOTE! Each second is represented as 1000, so if you do math with these
+	cout << adata[1] << endl;			// numbers you will probably want to divide it by 1000 so that you
+	cout << adata[2] << endl;			// are getting the time in seconds.
 	cout << adata[3] << endl;
 	cout << endl;
 
-
-	//for (int b = 0; b < bdata.size(); b++){
-	//	cout << bdata[b] << endl;
-	//}
-
+	// Sample data for CogState
 	cout << "Vector bdata\n";
 	cout << "\n Testing data from spot 0 to spot 3\n";
 	cout << bdata[0] << endl;
