@@ -32,7 +32,8 @@ int main() {
 	string line;
 	int count = 0;
 	float sum = 0;
-	vector<float> alldata;
+	vector<string> adata;	// changed float to string, for now
+	vector<string> bdata;
 
 
 	ifstream data; // ifstream (input file stream) because we are reading from a file
@@ -50,42 +51,55 @@ int main() {
 
 	// copy the file 2301data.csv into the 'line' string.
 	while (getline(data, line)) {
-		cout << line << endl;
+
+		// need 1st and 7th columns
+		getline(data, line, ',');	// 1st column, get/throwaway
+
+		getline(data, line, ',');	// 2nd column, want
+		adata.push_back(line);	// Store 2nd column in vector adata
+
+		getline(data, line, ',');	// 3rd column, get/throwaway
+		getline(data, line, ',');	// 4th column, get/throwaway
+		getline(data, line, ',');	// 5th column, get/throwaway
+		getline(data, line, ',');	// 6th column, get/throwaway
+		getline(data, line, ',');	// 7th column, get/throwaway
+		
+		getline(data, line, ',');	// 8th column, want
+		bdata.push_back(line);	// Store 8th column in vector bdata
+
+		getline(data, line, ',');	// 9th column, get/throwaway
+		getline(data, line, ',');	// 10th column, get/throwaway
 	}
 
 	data.close();	// close the .csv file. We always want to do this when we are done writing or reading from the file in our program.
 
 
+	// lets print our vector of column data and see if it worked
+	// cout << line << endl;
+	for (int a = 0; a < adata.size(); a++){
+		cout << adata[a] << endl;
+	}
+
+	cout << endl;
+	cout << "Vector adata\n";
+	cout << "Testing data from spot 0 to spot 3\n";
+	cout << adata[0] << endl;
+	cout << adata[1] << endl;
+	cout << adata[2] << endl;
+	cout << adata[3] << endl;
+	cout << endl;
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-	//// was: while(data.getline(line)) { error
-	//while (getline(data, line)) {
-	//	vector<string> row = split(line);
-	//	alldata.push_back(atof(row[1].c_str()));
+	//for (int b = 0; b < bdata.size(); b++){
+	//	cout << bdata[b] << endl;
 	//}
 
-	//for (int i = 0; i < alldata.size(); i++) {
-	//	count++;
-	//	sum += alldata[i];
-	//}
-
-	//cout << "average: " << sum / count << "\n";
+	cout << "Vector bdata\n";
+	cout << "\n Testing data from spot 0 to spot 3\n";
+	cout << bdata[0] << endl;
+	cout << bdata[1] << endl;
+	cout << bdata[2] << endl;
+	cout << bdata[3] << endl;
+	cout << endl;
 }
 
