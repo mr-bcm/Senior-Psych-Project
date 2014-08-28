@@ -2,36 +2,21 @@
 // in the program, catalogue those data points and find percentage of each in 1, 5, and 10 minute increments.
 
 // Emma Gebben
-// July 15, 2014 [1st attempt at build, with outline from Pete Tucker: CS Professor at Whitworth University]
+// July 15, 2014
+// Edited by Brennan Metzelaar & Tim Bradford
 
 #include <iostream>
-#include <string>	//bcm
+#include <string>
 #include <fstream>
 #include <vector>
 
-
 using namespace std;
-
-vector<string> split(string s) {
-	vector<string> ret;
-	size_t start = 0;
-	size_t end = s.find('\t', start);
-	while (end != string::npos) {
-		ret.push_back(s.substr(start, end - start));
-		start = end + 1;
-		end = s.find('\t', start);
-	}
-
-	return ret;
-}
-
 
 int main() {
 
-
 	string line;
-	int count = 0;
-	float sum = 0;
+
+	// two vectors, each is incontrol of storing a column of data from the .csv file
 	vector<string> adata;	// changed float to string, for now
 	vector<string> bdata;
 
@@ -50,6 +35,8 @@ int main() {
 	}
 
 	// copy the file 2301data.csv into the 'line' string.
+	// What we are doing here is very, simple. We get each line from each column, but only store the lines from the columns
+	// that we want to keep. In this case we only care about column 2 and 8.
 	while (getline(data, line)) {
 
 		// need 1st and 7th columns
